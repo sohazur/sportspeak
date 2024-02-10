@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify, send_file, send_from_directory
 from moviepy.editor import VideoFileClip, AudioFileClip
 import os
 import supervision as sv
@@ -6,7 +6,11 @@ import download_youtube_video
 from openai import OpenAI
 import prompt_image
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
+
+@app.route('/')
+def index():
+    return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/process-video', methods=['POST'])
 def process_video():
@@ -15,7 +19,7 @@ def process_video():
 
 
     # fill in your openai api key
-    OPENAI_API_KEY = 'Private-Key'
+    OPENAI_API_KEY = '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'
     
     video_path = download_youtube_video(url=VIDEO_URL)
     
