@@ -15,7 +15,7 @@ def process_video():
 
 
     # fill in your openai api key
-    OPENAI_API_KEY = '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'
+    OPENAI_API_KEY = 'Private-Key'
     
     video_path = download_youtube_video(url=VIDEO_URL)
     
