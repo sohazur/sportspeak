@@ -15,12 +15,12 @@ You will need Python installed on your system. This project was built with Pytho
 First, clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/sohazur/zu-hack-gt.git
+git clone https://github.com/sohazur/sportspeak.git
 ```
 
 Navigate to the project directory:
 ```bash
-cd zu-hack-gt
+cd sportspeak
 ```
 
 Install the required packages using pip:
