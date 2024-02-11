@@ -42,6 +42,10 @@ OPENAI_API_KEY='your_openai_api_key_here'
 ELEVENLABS_API_KEY='your_elevenlabs_api_key_here'
 ```
 
+```bash
+pip install python-dotenv
+```
+
 ### Running the Application
 
 To run the application, use the following command:
@@ -58,13 +62,13 @@ Enter a YouTube video URL and select a commentator from the dropdown menu. Click
 
 ### Contributors
 
-Sohazur Islam - m80008603@zu.ac.ae
-Arthur Diniz - m80008599@zu.ac.ae
-Shanzila Ahmed - m80008600@zu.ac.ae
-Maryam Alabbar - 202120508@zu.ac.ae
+1. Sohazur Islam - m80008603@zu.ac.ae
+2. Arthur Diniz - m80008599@zu.ac.ae
+3. Shanzila Ahmed - m80008600@zu.ac.ae
+4. Maryam Alabbar - 202120508@zu.ac.ae
 
 ### Acknowledgments
 
-OpenAI API - https://platform.openai.com/docs/introduction
-ElevenLabs API - https://elevenlabs.io/docs/api-reference/text-to-speech
-Roboflow - https://github.com/roboflow/awesome-openai-vision-api-experiments/tree/main/experiments/automated-voiceover-of-nba-game
+- OpenAI API - https://platform.openai.com/docs/introduction
+- ElevenLabs API - https://elevenlabs.io/docs/api-reference/text-to-speech
+- Roboflow - https://github.com/roboflow/awesome-openai-vision-api-experiments/tree/main/experiments/automated-voiceover-of-nba-game
