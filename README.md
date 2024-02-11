@@ -56,7 +56,15 @@ The application will be available at http://127.0.0.1:5000 in your web browser.
 
 Enter a YouTube video URL and select a commentator from the dropdown menu. Click on the "Process Video" button to start the processing. A loading spinner will appear, indicating that the video is being processed. Once done, the processed video with commentary will be automatically downloaded.
 
+### Contributors
+
+Sohazur Islam - m80008603@zu.ac.ae
+Arthur Diniz - m80008599@zu.ac.ae
+Shanzila Ahmed - m80008600@zu.ac.ae
+Maryam Alabbar - 202120508@zu.ac.ae
+
 ### Acknowledgments
 
-Thanks to all the contributors who participated in this project.
-Special thanks to OpenAI for the GPT-4 API and ElevenLabs for the text-to-speech service.
+OpenAI API - https://platform.openai.com/docs/introduction
+ElevenLabs API - https://elevenlabs.io/docs/api-reference/text-to-speech
+Roboflow - https://github.com/roboflow/awesome-openai-vision-api-experiments/tree/main/experiments/automated-voiceover-of-nba-game
