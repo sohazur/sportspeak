@@ -1,11 +1,13 @@
 from flask import Flask, request, send_file, send_from_directory, jsonify
 from moviepy.editor import VideoFileClip, AudioFileClip
-import os
 import supervision as sv
 # Ensure these modules are correctly implemented
 from download_youtube import download_youtube_video
 from p_image import prompt_image
-from openai import OpenAI
+import requests
+import ssl
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 app = Flask(__name__, static_url_path='', static_folder='static')
 
@@ -17,9 +19,11 @@ def index():
 def process_video():
     try:
         VIDEO_URL = request.json['videoUrl']
+        commentator_key = request.json.get('commentator', 'marv_albert')  # default to 'marv_albert' if not provided
+
         OPENAI_API_KEY = 'private-key'  # Use your actual OpenAI API key
 
-        FRAME_EXTRACTION_FREQUENCY_SECONDS = 4
+        FRAME_EXTRACTION_FREQUENCY_SECONDS = 2
 
         # Assuming download_youtube_video correctly downloads the video and returns its local path
         video_path = download_youtube_video(url=VIDEO_URL)
@@ -36,31 +40,56 @@ def process_video():
         # Load the video and mute its original audio
         video_clip = VideoFileClip(video_path).without_audio()
         
+        duration = video_clip.duration / 1.5
         PROMPT = (
-            f"The commmentry length should be maximum of {video_clip.duration} seconds."
+            f"The commmentry length should be maximum of {duration} seconds."
+            f"For every 2 seconds, generate a MAXIMUM of 7 words, NEVER more (it can be less)."
             f"The uploaded series of images is from a single video."
-            f"Don't describe litterally that frame 1, frame 2, etc. Do the commentry as if it's a live cricket match"
-            f"The frames were sampled every {FRAME_EXTRACTION_FREQUENCY_SECONDS} seconds."
-            f"Make sure it takes about {FRAME_EXTRACTION_FREQUENCY_SECONDS // 2} seconds to voice the description of each frame."
-            f"Use exclamation points and capital letters to express excitement if necessary. "
-            f"Describe the video using Ravi Shastri style as if he's doing for a Cricket game"
+            f"Don't describe litterally that frame 1, frame 2, etc. Do the commentary as if it's a live basketball match"
+            f"The frames were sampled every{FRAME_EXTRACTION_FREQUENCY_SECONDS} seconds."
+            f"Make sure it takes less than a second to voice the description of each frame."
+            f"Make sure to use exclamation points and capital letters to express excitement. "
+            f"Describe the video using Marv Albert style as if he's doing for a Basketball game"
         )
         # Generate commentary based on video frames (ensure this function is implemented correctly)
         description = prompt_image(api_key=OPENAI_API_KEY, images=frames, prompt=PROMPT)
 
-        # Assuming OpenAI's client is set up correctly and prompt_image returns a valid description
-        client = OpenAI(api_key=OPENAI_API_KEY)
-        response = client.audio.speech.create(
-            model="tts-1",
-            voice="echo",
-            input=description,
-        )
-        response.stream_to_file("audio.mp3")  # Save the generated audio as audio.mp3
+        commentators = {"marv_albert": "OIrVtz6eZY7taDTuddkW", "bob_rathbun": "lxJlkoJYiLlzsAncxcjz"}
 
-        
+        CHUNK_SIZE = 1024
+
+        voice = commentators[commentator_key]
+        url = "https://api.elevenlabs.io/v1/text-to-speech/" + voice
+
+        headers = {
+            "Accept": "audio/mpeg",
+            "Content-Type": "application/json",
+            "xi-api-key": "private-key",
+        }
+
+        data = {
+            "text": description,
+            "model_id": "eleven_multilingual_v2",
+            "voice_settings": {
+                "stability": 0.5,
+                "similarity_boost": 0.75,
+                "style": 0.4
+            }
+        }
+
+        response = requests.post(url, json=data, headers=headers)
+        with open('audio.mp3', 'wb') as f:
+            for chunk in response.iter_content(chunk_size=CHUNK_SIZE):
+                if chunk:
+                    f.write(chunk)
+
 
         # Load the generated audio
         audio_clip = AudioFileClip("audio.mp3")
+
+        # Make sure the audio does not exceed the video length
+        if audio_clip.duration > video_clip.duration:
+            audio_clip = audio_clip.subclip(0, video_clip.duration)
 
         # Combine the video with the generated audio
         final_clip = video_clip.set_audio(audio_clip)
