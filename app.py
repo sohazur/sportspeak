@@ -6,6 +6,7 @@ from download_youtube import download_youtube_video
 from p_image import prompt_image
 import requests
 import ssl
+import os
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
@@ -21,7 +22,7 @@ def process_video():
         VIDEO_URL = request.json['videoUrl']
         commentator_key = request.json.get('commentator', 'marv_albert')  # default to 'marv_albert' if not provided
 
-        OPENAI_API_KEY = 'private-key'  # Use your actual OpenAI API key
+        OPENAI_API_KEY = os.environ.get('OPENAI_KEY', '')
 
         FRAME_EXTRACTION_FREQUENCY_SECONDS = 2
 
@@ -64,8 +65,9 @@ def process_video():
         headers = {
             "Accept": "audio/mpeg",
             "Content-Type": "application/json",
-            "xi-api-key": "private-key",
+            "xi-api-key": os.environ.get('ELEVENLABS_KEY', ''),
         }
+
 
         data = {
             "text": description,
