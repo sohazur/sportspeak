@@ -1,5 +1,5 @@
 import numpy as np
-import encode_image_to_base64
+from encode_image import encode_image_to_base64
 
 def compose_payload(images: np.ndarray, prompt: str) -> dict:
     text_content = {

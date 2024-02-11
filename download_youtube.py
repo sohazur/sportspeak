@@ -1,5 +1,5 @@
 from pytube import YouTube
-import format_video_title
+from format_video import format_video_title
 
 def download_youtube_video(url: str, output_path: str = '.'):
     """

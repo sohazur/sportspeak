@@ -1,5 +1,5 @@
-import compose_headers
-import compose_payload
+from headers import compose_headers
+from payload import compose_payload
 import requests
 import numpy as np
 
