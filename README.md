@@ -56,11 +56,7 @@ The application will be available at http://127.0.0.1:5000 in your web browser.
 
 Enter a YouTube video URL and select a commentator from the dropdown menu. Click on the "Process Video" button to start the processing. A loading spinner will appear, indicating that the video is being processed. Once done, the processed video with commentary will be automatically downloaded.
 
-### License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ### Acknowledgments
 
 Thanks to all the contributors who participated in this project.
-Special thanks to OpenAI for the GPT-3 API and ElevenLabs for the text-to-speech service.
+Special thanks to OpenAI for the GPT-4 API and ElevenLabs for the text-to-speech service.
