@@ -50,7 +50,7 @@ def process_video():
             f"The frames were sampled every{FRAME_EXTRACTION_FREQUENCY_SECONDS} seconds."
             f"Make sure it takes less than a second to voice the description of each frame."
             f"Make sure to use exclamation points and capital letters to express excitement. "
-            f"Describe the video using Marv Albert style as if he's doing for a Basketball game"
+            f"Describe the video using {commentator_key} style as if he's doing for a Basketball game"
         )
         # Generate commentary based on video frames (ensure this function is implemented correctly)
         description = prompt_image(api_key=OPENAI_API_KEY, images=frames, prompt=PROMPT)
